@@ -1,5 +1,6 @@
 import CustomBadge from "@/components/common/custom-badge";
 import DashboardCard from "@/components/common/dashboard-card";
+import { LatestTable } from "@/components/dashboard/latest-table";
 import MaxWidthWrapper from "@/components/layout/max-width-wrapper";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -9,6 +10,7 @@ import {
   Sparkles,
   Wallet,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   return (
@@ -47,7 +49,16 @@ export default function DashboardPage() {
         {/* Latest Transaction */}
         <div className="mt-5 grid grid-cols-3 gap-4">
           <div className="col-span-2 space-y-3">
-            <h2 className="text-md font-bold">Transaksi Terakhir</h2>
+            <div className="flex flex-row items-center justify-between">
+              <h2 className="text-md font-bold">Transaksi Terakhir</h2>
+              <Link
+                href={"/transaction"}
+                className="px-2 text-xs text-gray-600 hover:underline"
+              >
+                Lihat Semua
+              </Link>
+            </div>
+            <LatestTable />
           </div>
           <div className="col-span-1 space-y-3">
             <h2 className="text-md font-bold">Aksi Cepat</h2>
@@ -70,11 +81,14 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter className="rounded-b-md bg-blue-100 text-blue-700">
-                <div className="flex w-full flex-row items-center justify-between gap-2 py-2 text-sm">
+              <CardFooter className="rounded-b-md bg-blue-100 p-0 text-blue-700">
+                <Link
+                  href="/chat"
+                  className="flex w-full flex-row items-center justify-between gap-2 rounded-b-md px-6 py-2 text-sm transition hover:bg-blue-200"
+                >
                   <p>Mulai Chat</p>
                   <ChevronRight />
-                </div>
+                </Link>
               </CardFooter>
             </Card>
           </div>
