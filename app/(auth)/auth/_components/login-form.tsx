@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Loader2, LogIn } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z
@@ -29,6 +31,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,7 +42,35 @@ export default function LoginForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {}
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message);
+        return;
+      }
+
+      toast.success(data.message);
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 800);
+    } catch (err) {
+      console.error(err);
+      toast.error("Terjadi kesalahan pada server.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <Form {...form}>

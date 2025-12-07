@@ -23,6 +23,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 enum ServiceType {
   FREELANCE = "FREELANCE",
@@ -48,6 +50,7 @@ const formSchema = z.object({
 });
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,7 +63,35 @@ export default function RegisterForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {}
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message);
+        return;
+      }
+
+      toast.success(data.message);
+
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 800);
+    } catch (err) {
+      console.error(err);
+      toast.error("Terjadi kesalahan pada server.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <Form {...form}>
