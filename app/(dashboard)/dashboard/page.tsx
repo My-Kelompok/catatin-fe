@@ -1,18 +1,12 @@
 "use client";
 
 import CustomBadge from "@/components/common/custom-badge";
-import DashboardCard from "@/components/common/dashboard-card";
-import { LatestTable } from "@/components/dashboard/latest-table";
+import DashboardLatestTransaction from "@/components/dashboard/latest-transaction";
+import DashboardOverview from "@/components/dashboard/overview";
 import MaxWidthWrapper from "@/components/layout/max-width-wrapper";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import {
-  ChevronRight,
-  Hand,
-  MessageSquare,
-  Sparkles,
-  Wallet,
-} from "lucide-react";
+import { ChevronRight, Hand, MessageSquare, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardPage() {
@@ -31,39 +25,20 @@ export default function DashboardPage() {
           </p>
         </div>
         {/* Overview */}
-        <div className="grid grid-cols-3 gap-4">
-          <DashboardCard
-            icon={Wallet}
-            label={"Total Pemasukan"}
-            value={"Rp. 12.500.000"}
-            percentage={"+12%"}
-          />
-          <DashboardCard
-            icon={Wallet}
-            label={"Total Pemasukan"}
-            value={"Rp. 12.500.000"}
-            percentage={"+12%"}
-          />
-          <DashboardCard
-            icon={Wallet}
-            label={"Total Pemasukan"}
-            value={"Rp. 12.500.000"}
-            percentage={"+12%"}
-          />
-        </div>
-        {/* Latest Transaction */}
+        <DashboardOverview />
         <div className="mt-5 grid grid-cols-3 gap-4">
           <div className="col-span-2 space-y-3">
+            {/* Latest Transaction */}
             <div className="flex flex-row items-center justify-between">
               <h2 className="text-md font-bold">Transaksi Terakhir</h2>
               <Link
-                href={"/transaction"}
+                href={"/dashboard/transaction"}
                 className="px-2 text-xs text-gray-600 hover:underline"
               >
                 Lihat Semua
               </Link>
             </div>
-            <LatestTable />
+            <DashboardLatestTransaction />
           </div>
           <div className="col-span-1 space-y-3">
             <h2 className="text-md font-bold">Aksi Cepat</h2>
