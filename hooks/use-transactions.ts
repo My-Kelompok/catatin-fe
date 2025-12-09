@@ -1,5 +1,5 @@
-import { Transaction } from "@/types/transaction";
-import { useQuery } from "@tanstack/react-query";
+import { Transaction, TransactionRequest } from "@/types/transaction";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useTransactions = () => {
@@ -26,3 +26,34 @@ export const useTransactions = () => {
     refetchOnWindowFocus: false,
   });
 };
+
+export function useCreateTransaction() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (values: TransactionRequest) => {
+      console.log(values);
+      const res = await fetch("/api/transactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message || "Gagal memuat transactions");
+        return;
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("Berhasil membuat transaksi");
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    },
+    onError: (err: Error) => {
+      toast.error(err.message || "Terjadi kesalahan pada server.");
+    },
+  });
+}

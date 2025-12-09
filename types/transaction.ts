@@ -4,3 +4,9 @@ export interface Transaction {
   amount: string;
   transaction_date: string;
 }
+
+export interface TransactionRequest {
+  title: string;
+  amount: string;
+  transaction_date: string;
+}

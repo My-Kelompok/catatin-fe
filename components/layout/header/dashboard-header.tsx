@@ -1,6 +1,4 @@
-import Link from "next/link";
-import { Button } from "../../ui/button";
-import { Plus } from "lucide-react";
+import { CreateTransactionDialog } from "@/components/transaction/create-transaction-dialog";
 
 export default function DashboardHeader() {
   return (
@@ -12,7 +10,7 @@ export default function DashboardHeader() {
           Catat<span className="text-blue-700">In</span>
         </h1> */}
         <nav className="space-x-3">
-          <Button
+          {/* <Button
             asChild
             className="rounded-md bg-blue-700 text-sm text-white hover:bg-blue-800"
           >
@@ -20,7 +18,8 @@ export default function DashboardHeader() {
               <Plus size={10} />
               Transaksi Baru
             </Link>
-          </Button>
+          </Button> */}
+          <CreateTransactionDialog />
         </nav>
       </div>
     </header>
