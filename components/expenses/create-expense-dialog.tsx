@@ -166,7 +166,7 @@ export function CreateExpenseDialog() {
                 <Button
                   type="submit"
                   disabled={isPending}
-                  className="w-full cursor-pointer"
+                  className="w-full cursor-pointer bg-blue-700 hover:bg-blue-800"
                 >
                   {isPending ? (
                     <>
