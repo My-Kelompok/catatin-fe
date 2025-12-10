@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { BanknoteArrowUp, Loader2, Plus, Save } from "lucide-react";
+import { BanknoteArrowDown, Loader2, Plus, Save } from "lucide-react";
 import z from "zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -25,7 +25,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useCreateTransaction } from "@/hooks/use-transactions";
+import { useCreateExpense } from "@/hooks/use-expenses";
 
 const contactSchema = z.object({
   title: z
@@ -38,10 +38,10 @@ const contactSchema = z.object({
     .refine((val) => !isNaN(Number(val)), {
       message: "Amount must be a valid number.",
     }),
-  transaction_date: z.string(),
+  expense_date: z.string(),
 });
 
-export function CreateTransactionDialog() {
+export function CreateExpenseDialog() {
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<z.infer<typeof contactSchema>>({
@@ -49,15 +49,15 @@ export function CreateTransactionDialog() {
     defaultValues: {
       title: "",
       amount: "",
-      transaction_date: new Date().toISOString(),
+      expense_date: new Date().toISOString(),
     },
   });
 
-  const { mutate: createTransaction, isPending } = useCreateTransaction();
+  const { mutate: createExpense, isPending } = useCreateExpense();
 
   const onSubmit = (values: z.infer<typeof contactSchema>) => {
     console.log(values);
-    createTransaction(values, {
+    createExpense(values, {
       onSuccess: () => {
         form.reset();
         setIsOpen(false);
@@ -72,8 +72,8 @@ export function CreateTransactionDialog() {
           type="button"
           className="size-fit rounded-md bg-blue-700 text-xs text-white hover:bg-blue-800"
         >
-          <Plus size={5} />
-          Transaksi Baru
+          <Plus size={10} />
+          Expense Baru
         </Button>
       </DialogTrigger>
 
@@ -83,11 +83,11 @@ export function CreateTransactionDialog() {
             <DialogHeader>
               <div>
                 <DialogTitle className="flex items-center gap-3">
-                  <BanknoteArrowUp size={22} strokeWidth={2} />
-                  <span>Tambah Transaksi Baru</span>
+                  <BanknoteArrowDown size={22} strokeWidth={2} />
+                  <span>Tambah Expense Baru</span>
                 </DialogTitle>
                 <DialogDescription>
-                  Masukan pemasukan anda dibawah.
+                  Masukan pengeluaran anda dibawah.
                 </DialogDescription>
               </div>
             </DialogHeader>
@@ -125,10 +125,10 @@ export function CreateTransactionDialog() {
               />
               <FormField
                 control={form.control}
-                name="transaction_date"
+                name="expense_date"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tanggal Transaksi</FormLabel>
+                    <FormLabel>Tanggal Expense</FormLabel>
                     <FormControl>
                       <Input
                         {...field}

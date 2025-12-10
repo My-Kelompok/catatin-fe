@@ -50,7 +50,8 @@ export default function DashboardPage() {
                     <CustomBadge
                       icon={Sparkles}
                       label={"Fast"}
-                      color="text-white"
+                      iconColor="text-white"
+                      textColor="text-white"
                     />
                   </div>
                   <div className="space-x-2">

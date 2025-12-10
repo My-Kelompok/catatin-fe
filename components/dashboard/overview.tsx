@@ -1,12 +1,18 @@
 import { BanknoteArrowDown, BanknoteArrowUp, Wrench } from "lucide-react";
 import DashboardCard from "../common/dashboard-card";
 import { useTransactions } from "@/hooks/use-transactions";
+import { useExpenses } from "@/hooks/use-expenses";
 
 export default function DashboardOverview() {
   const { data: transactions = [] } = useTransactions();
+  const { data: expenses = [] } = useExpenses();
 
   const totalIncome = transactions.reduce((acc, transaction) => {
     return acc + Number(transaction.amount || 0);
+  }, 0);
+
+  const totalOutcome = expenses.reduce((acc, expense) => {
+    return acc + Number(expense.amount || 0);
   }, 0);
 
   const totalService = transactions.length;
@@ -30,7 +36,7 @@ export default function DashboardOverview() {
       <DashboardCard
         icon={BanknoteArrowDown}
         label={"Total Pengeluaran"}
-        value={"-"}
+        value={`Rp. ${totalOutcome.toLocaleString("id-ID")}`}
         percentage={"-"}
         iconColor="text-red-700"
         iconBgColor="bg-red-300/50"
