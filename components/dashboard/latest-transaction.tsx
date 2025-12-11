@@ -11,8 +11,6 @@ import { useTransactions } from "@/hooks/use-transactions";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import {
-  BanknoteArrowDown,
-  CircleFadingArrowUp,
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
