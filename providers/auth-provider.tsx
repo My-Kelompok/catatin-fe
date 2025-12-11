@@ -1,5 +1,6 @@
 "use client";
 
+import { queryClient } from "@/lib/query-client";
 import {
   createContext,
   useCallback,
@@ -59,6 +60,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         toast.error(data.message);
         return false;
       }
+
+      queryClient.clear();
 
       setUser(null);
       toast.success(data.message);

@@ -10,10 +10,7 @@ import { useExpenses } from "@/hooks/use-expenses";
 import { useTransactions } from "@/hooks/use-transactions";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
-import {
-  TrendingDown,
-  TrendingUp,
-} from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import React from "react";
 
 dayjs.extend(isToday);
@@ -62,13 +59,13 @@ export default function DashboardLatestTransaction() {
         <TableBody className="bg-white">
           {isLoading ? (
             <TableRow>
-              <TableCell colSpan={3} className="py-4 text-center">
+              <TableCell colSpan={4} className="py-4 text-center">
                 Loading...
               </TableCell>
             </TableRow>
           ) : merged.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={3} className="py-4 text-center text-gray-500">
+              <TableCell colSpan={4} className="py-4 text-center text-gray-500">
                 Belum ada transaksi
               </TableCell>
             </TableRow>
